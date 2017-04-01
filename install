@@ -22,7 +22,7 @@ if [[ "$optiondb" = '2' ]]; then
 	awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' > /root/usuarios.db
 fi
 echo ""
-tput setaf 6 ; tput bold ; echo "" ; echo "               Aguarde, instalando AdmManager..." ; echo "" ; tput sgr0
+tput setaf 6 ; tput bold ; echo "" ; echo "	Aguarde, instalando AdmManager..." ; echo "" ; tput sgr0
 sleep 3
 apt-get update -y
 apt-get upgrade -y
