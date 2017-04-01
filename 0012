@@ -11,7 +11,7 @@ done
 printf "\n"
 tput setaf 5 ; tput bold ; printf "Nome:"; tput sgr0 ; read nome
 tput setaf 5 ; tput bold ; printf "Senha: "; tput sgr0 ; read pass
-echo -e "\n\033[1;30mUse s = segundos, m = minutos, h = horas e d = dias\033[0m" 
+echo -e "\n\033[1;30mUse s = segundos, m = minutos e h = horas\033[0m" 
 echo -e "\033[1;35mexemplo: \033[1;31m14s.\033[0m"
 echo " "
 tput setaf 5 ; tput bold ; printf "Quanto tempo usuario $nome deve durar: "; tput sgr0 ; read tempoin
