@@ -98,7 +98,7 @@ echo -e "\033[1;31mPara sair precione Ctrl + C\033
 \033[1;36m3|Redefinir
  \033[1;30m|Alterar senha, nome, data de validade, etc.
 \033[1;36m4|Backup
- \033[1;30m|Criar Backup de usuários. 
+ \033[1;30m|Opções de Backup dos usuários. 
 \033[1;36m5|Monitorar
  \033[1;30m|Monitorar em tempo real as conexões.
 \033[1;36m6|Host
