@@ -1,13 +1,14 @@
 #!/bin/bash
 
-echo ""
+clear
 echo -e "\033[1;36mLista de usuários:\033[0m"
 tput setaf 1 ; tput bold ; awk -F : '$3 >= 500 { print $1 }' /etc/passwd | grep -v '^nobody' ; tput sgr0
 echo ""
 tput setaf 5 ; tput bold; read -p "Nome do usuário para remover: " user ; tput sgr0
 if [[ -z $user ]]
 then
-		tput setaf 7 ; tput setab 4 ; tput bold ; echo "" ; echo "Você não digitou um nome ou o nome digitado é inválido!" ; echo "" ; tput sgr0
+		echo
+		echo -e "\033[1;31mErro! \033[1;37mVocê não digitou um nome ou o nome digitado é inválido!\033[0m"
 		echo " "
 				echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
 
@@ -27,16 +28,31 @@ else
 			echo
 			echo -e "\033[1;36mO usuário \033[1;31m$user \033[1;36mfoi removido com sucesso!\033[0m" 
 			grep -v ^$user[[:space:]] /root/usuarios.db > /tmp/ph ; cat /tmp/ph > /root/usuarios.db
-			exit 1
+		 	echo
+			echo -n -e "\033[1;31mDeseja deletar mais um?(s/n):\033[0m"
+
+				read resp
+				if [ "$resp" == "s" ]; then
+					0033
+				elif [ "$resp" == "n" ]; then
+    				admm
+				fi
 		else
-			tput setaf 7 ; tput setab 4 ; tput bold ; echo "" ; echo "Desconectando usuário $user..." ; tput sgr0
+			tput setaf 1 ; tput bold ; echo "" ; echo "Desconectando usuário $user..." ; tput sgr0
 			pkill -f "$user"
 			deluser $user > /dev/null
 			echo
 			tput setaf 7 ; tput setab 1 ; tput bold ; echo "" ; echo "O usuário $user foi removido com sucesso!" ; echo "" ; tput sgr0
 			grep -v ^$user[[:space:]] /root/usuarios.db > /tmp/ph ; cat /tmp/ph > /root/usuarios.db
 			echo
-			tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+			echo -n -e "\033[1;31mDeseja deletar mais um?(s/n):\033[0m"
+
+				read resp
+				if [ "$resp" == "s" ]; then
+					0033
+				elif [ "$resp" == "n" ]; then
+    				admm
+				fi
 		fi
 	else
         echo
