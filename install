@@ -7,9 +7,8 @@ echo
 if [ -f "/root/usuarios.db" ]
 then
 	echo -e "\033[1;36mUma base de dados de usuários foi encontrada!\033[0m"
-	echo -e "\033[1;36mDeseja mantê-la? 
-	echo "ou criar uma nova base de dados?"
-	tput setaf 6 ; tput bold ;	echo ""
+	echo -e "\033[1;36mO que deseja fazer?\033[0m" 
+	echo
 	echo -e "\033[1;31m* \033[1;36m1|Manter Base de Dados Atual"
 	echo -e "\033[1;30m|Preservando o limite de conexões simultâneas dos usuários)\033[0m"
 	echo -e "\033[1;31m* \033[1;36m2|Criar uma Nova Base de Dados\033[0m"
