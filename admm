@@ -21,11 +21,13 @@ fi
 function usuarios(){
 clear
 echo -e "\033[1;37m Qual tipo de usuário gostaria de criar?
-\033[1;36m1|Normal
+\033[1;36m1|SSH
  \033[1;30m|Criar usuário com data de expiração em dias.
 \033[1;36m2|Teste
  \033[1;30m|Criar usuário teste duração em segundos ou horas.
-\033[1;36m3|Voltar
+\033[1;36m3|OpenVPN
+ \033[1;30m|Criar usuário OpenVPN
+\033[1;36m4|Voltar
  \033[1;30m|Voltar ao menu anterior.\033[0m" 
 read -p "Opção:" opcao
 
@@ -35,6 +37,8 @@ case $opcao in
  2) 
   0012;;
  3)
+  0013;;
+  4)
   admm;;
   *)
   id > /dev/null 2> /dev/null
@@ -88,7 +92,7 @@ echo -e "\033[1;37mPara executar um comando escolha uma das opçoẽs abaixo.\03
 
 echo -e "\033[1;31mPara sair precione Ctrl + C\033
  \033[1;36m1|Criar
- \033[1;30m|Criar usuário normal ou teste.
+ \033[1;30m|Gerenciamento de usuário SSH e OpenVPN.
 \033[1;36m2|Rm Expirados
  \033[1;30m|Remover usuários expirados. 
 \033[1;36m3|Redefinir
