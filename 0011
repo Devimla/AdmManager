@@ -31,7 +31,7 @@ else
 		if [[ $sizemin -lt 2 ]]
 		then
 			echo "" 
-			echo -e "\033[1;31mErro! \033[1;37mVocê digitou um nome de usuário muito curto, use no mínimo três caracteres!"
+			echo -e "\033[1;31mErro! \033[1;37mVocê digitou um nome de usuário muito curto, use no mínimo dois caracteres!"
 			echo " "
 			echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
 
@@ -75,7 +75,7 @@ else
 					if [[ -z $password ]]
 					then
 					echo "" 
-					echo -e "\033[1;31mErro! \033[1;37mVocê digitou uma senha vazia!\033[0m"
+					echo -e "\033[1;31mErro! \033[1;37mVocê não digitou a senha!\033[0m"
 					echo " "
 				    echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
 
