@@ -1,0 +1,56 @@
+#!/bin/bash
+
+
+if [ -f "/root/usuarios.db" ]
+then
+tput setaf 6 ; tput bold ;	echo ""
+	echo "Uma base de dados de usuários ('usuarios.db') foi encontrada!"
+	echo "Deseja mantê-la (preservando o limite de conexões simultâneas dos usuários)"
+	echo "ou criar uma nova base de dados?"
+	tput setaf 6 ; tput bold ;	echo ""
+	echo "[1] Manter Base de Dados Atual"
+	echo "[2] Criar uma Nova Base de Dados"
+	echo "" ; tput sgr0
+	read -p "Opção?: " -e -i 1 optiondb
+else
+	awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' > /root/usuarios.db
+fi
+echo ""
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "" ; echo "Aguarde a configuração automática" ; echo "" ; tput sgr0
+sleep 3
+apt-get update -y
+apt-get upgrade -y
+rm /bin/criarusuario /bin/expcleaner /bin/sshlimiter /bin/addhost /bin/listar /bin/sshmonitor /bin/ajuda /bin/openvpnsetup /bin/userbackup /bin/tcptweaker /bin/badvpnsetup /bin/otimizar /bin/speedtest> /dev/null
+rm /root/ExpCleaner.sh /root/CriarUsuario.sh /root/sshlimiter.sh > /dev/null
+apt-get install squid3 bc screen nano unzip dos2unix wget python-pip inxi -y
+pip install speedtest-cli 
+killall apache2
+apt-get purge apache2 -y
+if [ -f "/usr/sbin/ufw" ] ; then
+	ufw allow 443/tcp ; ufw allow 80/tcp ; ufw allow 3128/tcp ; ufw allow 8799/tcp ; ufw allow 8080/tcp
+fi
+git clone https://github.com/Devimla/AdmManager.git
+clear
+   cd AdmManager
+   rm -rf README.md
+   rm -rf install
+   for arqs in `ls`
+   do
+   rm /bin/$arqs 2>/dev/null
+   mv $arqs /bin
+   chmod +x /bin/$arqs
+   done
+   echo -e "\033[1;36mConcluído, execute o comando \033[1;31madmm\033[1;36m como usuário root ou usuário com permissões sudo.\033[0m"
+   echo -e "\033[1;31mPressione ENTER para concluir.\033[0m"
+   read #enter
+   admm
+echo ""
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "Proxy Squid Instalado e rodando nas portas: 80, 3128, 8080 e 8799" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "OpenSSH rodando nas portas 22 e 443" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "Scripts para gerenciamento de usuário instalados" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "Leia a documentação para evitar dúvidas e problemas!" ; tput sgr0
+tput setaf 7 ; tput setab 4 ; tput bold ; echo "Para ver os comandos disponíveis use o comando: ajuda" ; tput sgr0
+echo ""
+if [[ "$optiondb" = '2' ]]; then
+	awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' > /root/usuarios.db
+fi
