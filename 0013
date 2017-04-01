@@ -398,7 +398,7 @@ verb 3
 	echo -e "\033[1;36mSe você quiser adicionar mais usuários, basta executar este script novamente.\033[0m"
     echo " "
     tput setaf 1 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para continuar..." ; echo "" ; echo "" ; tput sgr0
-	admm
+	0013
 				elif [ "$resp" == "n" ]; then
     				admm
 				fi
