@@ -1,0 +1,63 @@
+#!/bin/bash
+
+clear
+payload="/etc/squid3/payload.txt"
+tput setaf 6 ; tput bold ; printf '%35s%s%-10s\n' "Adicionar Host ao Squid" ; tput sgr0
+if [ ! -f "$payload" ]
+then
+	tput setaf 7 ; tput setab 4 ; tput bold ; echo "" ; echo "Arquivo $payload não encontrado" ; tput sgr0
+	admm
+else
+	tput setaf 5 ; tput bold ; echo ""; echo "Lista de Host aceitos atualmente:" ; tput sgr0
+	tput setaf 7 ; tput bold ; echo "" ; cat $payload ; echo "" ; tput sgr0
+	echo -e "\033[1;36mDigite o host que deseja adicionar:"
+    read host
+	if [[ -z $host ]]
+	then
+		echo -e "\033[1;31mErro! \033[1;37mVocê não digitou um Host, tente novamente.\033[0m"
+        sleep 3
+        0006
+	else
+		if [[ `grep -c "^$host" $payload` -eq 1 ]]
+		then
+			echo
+			echo -e "\033[1;31mErro! \033[1;37mO domínio $host já está na lista de Host permitidas.\033[0m"
+			echo " "
+            echo -n -e "\033[1;31mDeseja adicionar outra Host?(s/n):\033[0m"
+
+				read resp
+				if [ "$resp" == "s" ]; then
+					0006
+				elif [ "$resp" == "n" ]; then
+    				admm
+				fi
+		else
+			if [[ $host != \.* ]]
+			then
+                echo -e "\033[1;31m::::::Erro!\033[0m" 
+				echo -e "\033[1;37mVocê deve adicionar um domínio iniciando-o com um ponto!\033[0m"
+				echo -e "\033[1;37mPor exemplo: \033[1;31m.google.com.br\033[0m"
+				echo -e "\033[1;37mNão é necessário adicionar subdomínios para domínios que já estão na lista de Host permitida\033[0m"
+				echo -e "\033[1;37mOu seja, não é necessário adicionar \033[1;31mrecargafacil.claro.com.br \033[1;37mse o domínio \033[1;31m.claro.com.br \033[1;37mjá estiver na lista de Host.\033[0m"
+				echo "" 
+                tput setaf 6 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para tentar novamente" ; echo "" ; echo "" ; tput sgr0
+			    0006
+            else
+				echo "$host" >> $payload && grep -v "^$" $payload > /tmp/a && mv /tmp/a $payload
+				tput setaf 6 ; tput bold ; echo "" ; echo "Host adicionado com sucesso." ; tput sgr0
+                tput setaf 5 ; tput bold ; echo "" ; echo "Host aceitos atualmente:" ; tput sgr0
+				tput setaf 7 ; tput bold ; echo "" ; cat $payload ; echo "" ; tput sgr0
+				if [ ! -f "/etc/init.d/squid3" ]
+				then
+					service squid3 reload
+				else
+					/etc/init.d/squid3 reload
+				fi	
+				tput setaf 6 ; tput bold ; echo "" ; echo "Squid recarregado com sucesso!" ; echo "" ; tput sgr0
+				echo
+				tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+                admm
+			fi
+		fi
+	fi
+fi

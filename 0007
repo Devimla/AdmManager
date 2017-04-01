@@ -1,0 +1,26 @@
+#!/bin/bash
+
+clear
+sshd_config_bak=$(cat /etc/ssh/sshd_config |grep -v "Banner")
+echo "$sshd_config_bak" > /etc/ssh/sshd_config
+echo "Banner /etc/bannerssh" >> /etc/ssh/sshd_config
+service ssh restart 1>/dev/null 2>/dev/null
+service sshd restart 1>/dev/null 2>/dev/null
+if [ -f /etc/bannerssh ]
+then
+banner=$(cat /etc/bannerssh)
+else
+banner="Não há um banner no momento"
+fi
+echo -e "\033[1;36mBanner atual\n\n\033[1;37m$banner\n\033[0m"
+echo -e "\033[1;31mQual banner deseja adicionar (ctrl + c para sair )\033[0m"
+read -p ": " bannerssh
+echo "$bannerssh" > /etc/bannerssh
+service ssh restart 1> /dev/null 2>/dev/null
+service sshd restart 1>/dev/null 2>/dev/null
+echo
+echo -e "\033[1;36mBanner atualizado com sucesso.\033[0m"
+echo -e "\033[1;37mBanner atual:\n\n\033[1;37m$(cat /etc/bannerssh)\n\033[0m"
+echo
+tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+admm

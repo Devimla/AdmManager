@@ -1,0 +1,70 @@
+#!/bin/bash
+
+clear
+echo -e "\033[1;36mEste backup também inclui a senha do usuário root!\033[0m"
+
+echo ""
+echo -e "\033[1;35mO que deseja fazer?\033[0m"
+echo ""
+echo -e "\033[1;31m* \033[1;36m1 - Criar Backup"
+echo -e "\033[1;31m* \033[1;36m2 - Restaurar Backup"
+echo -e "\033[1;31m* \033[1;36m3 - Voltar\033[0m"
+echo ""
+
+tput setaf 5 ; tput bold ; read -p "Opção: " -e -i 1 opcao ; tput sgr0
+
+if [[ "$opcao" = '1' ]]; then
+	if [ -f "/root/usuarios.db" ]
+	then
+		echo ""
+		echo -e "\033[1;36mCriando backup...\033[0m"
+		sleep 5
+		echo ""
+		tar cvf /root/backupuser.vps /root/usuarios.db /etc/shadow /etc/passwd /etc/group /etc/gshadow
+		echo ""
+		echo -e "\033[1;36mBackup concluído com êxito.\033[0m"
+		echo -e "\033[1;36mO arquivo com de backup se encontra em \033[1;31m/root/backupuser.vps\033[0m"
+		echo ""
+		tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+		admm
+	else
+		echo ""
+		echo -e "\033[1;36mCriando backup...\033[0m"
+		sleep 5
+		echo ""
+		tar cvf /root/backupuser.vps /etc/shadow /etc/passwd /etc/group /etc/gshadow
+		echo ""
+		echo -e "\033[1;36mBackup concluído com êxito.\033[0m"
+		echo -e "\033[1;36mO arquivo com de backup se encontra em \033[1;31m/root/backupuser.vps\033[0m"
+		echo
+		tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+		admm
+	fi
+fi
+if [[ "$opcao" = '2' ]]; then
+	if [ -f "/root/backupuser.vps" ]
+	then
+		echo ""
+		echo -e "\033[1;31mRestaurando backup...\033[0m"
+		echo ""
+		sleep 5
+		cp /root/backupuser.vps /backupuser.vps
+		cd /
+		tar -xvf backupuser.vps
+		rm /backupuser.vps
+		echo ""
+		echo -e "\033[1;36mUsuários e senhas importados com sucesso.\033[0m"
+		echo ""
+		tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+		admm
+	else
+		echo ""
+		echo -e "\033[1;36mO arquivo \033[1;31m/root/backupuser.vps \033[1;36mnão foi encontrado!\033[0m"
+		echo -e "\033[1;36mCeritifique-se que ele esteja localizado no diretório \033[1;31m/root/ \033[1;36mcom o nome \033[1;31mbackupuser.vps\033[0m"
+		echo ""
+		admm
+	fi
+fi
+if [[ "$opcao" = '3' ]]; then
+     admm
+fi

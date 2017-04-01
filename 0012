@@ -1,0 +1,38 @@
+#!/bin/bash 
+
+clear
+mkdir /etc/usuariosteste 1>/dev/null 2>/dev/null
+echo -e "\033[1;36mCriar usuário teste\033[0m"
+echo -e "\033[1;30mInsira os dados para o novo usuario de teste.\033[0m"
+for testus in $(ls /etc/usuariosteste |sort |sed 's/.sh//g')
+do
+echo "$testus"
+done
+printf "\n"
+tput setaf 5 ; tput bold ; printf "Nome:"; tput sgr0 ; read nome
+tput setaf 5 ; tput bold ; printf "Senha: "; tput sgr0 ; read pass
+echo -e "\n\033[1;30mUse s = segundos, m = minutos, h = horas e d = dias\033[0m" 
+echo -e "\033[1;35mexemplo: \033[1;31m14s.\033[0m"
+echo " "
+tput setaf 5 ; tput bold ; printf "Quanto tempo usuario $nome deve durar: "; tput sgr0 ; read tempoin
+tempo=$(echo "$tempoin" |sed 's/ //g')
+useradd -M -s /bin/false $nome
+(echo $pass;echo $pass) |passwd $nome 1>/dev/null 2>/dev/null
+echo "#!/bin/bash
+sleep $tempo
+kill"' $(ps -u '"$nome |awk '{print"' $1'"}') 1>/dev/null 2>/dev/null
+userdel --force $nome
+rm -rf /etc/usuariosteste/$nome.sh
+exit" > /etc/usuariosteste/$nome.sh
+clear
+echo -e "\033[1;36mDados do novo usuário\033[0m"
+echo " "
+echo -e "\033[1;35mNome: \033[1;31m$nome
+\033[1;35mSenha: \033[1;31m$pass
+\033[1;35mValidade: \033[1;31m$tempo\n\033[0m"
+echo " "
+echo -e "\033[1;37mApos o tempo expirar o usuario sera deletado e todos serão desconectados.\033[0m"
+bash /etc/usuariosteste/$nome.sh &
+echo 
+tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+admm

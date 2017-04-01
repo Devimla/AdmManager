@@ -1,0 +1,25 @@
+#!/bin/bash
+
+clear
+datenow=$(date +%s)
+echo -e "\033[1;36mNome de usuario     \033[1;36mData de validade      \033[1;37mEstado\033[0m"
+echo -e "\033[1;30m------------------------------------------------\033[0m" 
+for user in $(awk -F: '{print $1}' /etc/passwd); do
+	expdate=$(chage -l $user|awk -F: '/Account expires/{print $2}')
+	echo $expdate|grep -q never && continue
+	datanormal=(date -d"$expdate" '+%d/%m/%Y') ; tput sgr0
+	tput setaf 1 ; tput bold ; printf '%-20s%-21s%s' $user $datanormal ; tput sgr0
+	expsec=$(date +%s --date="$expdate")
+	diff=$(echo $datenow - $expsec|bc -l)
+	tput setaf 2 ; tput bold
+	echo $diff|grep -q ^\- && echo -e "\033[1;32mMantido\033[0m" && continue
+	tput setaf 1 ; tput bold
+	echo -e "\033[1;31mRemovido\033[0m"
+	pkill -f $user
+	userdel $user
+	grep -v ^$user[[:space:]] /root/usuarios.db > /tmp/ph ; cat /tmp/ph > /root/usuarios.db
+done
+tput sgr0 
+echo ""
+tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+admm

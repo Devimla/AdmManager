@@ -1,0 +1,28 @@
+#!/bin/bash
+
+clear
+echo -e "\033[1;36mUsuários existentes:\033[0m"
+tput setaf 1 ; tput bold ; awk -F : '$3 >= 500 { print $1 }' /etc/passwd | grep -v '^nobody' ; echo "" ; tput sgr0
+tput setaf 5 ; tput bold ; printf "Nome atual do usuario: "; read user ; tput sgr0
+if cat /etc/passwd |grep $user: >/dev/null 2>/dev/null
+then
+printf ""
+else
+echo 
+echo -e "\033[1;31mErro! \033[1;37mUsuario não existe\033[0m"
+echo " "
+echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+				read resp
+				if [ "$resp" == "s" ]; then
+					0031
+				elif [ "$resp" == "n" ]; then
+    				admm
+				fi
+fi
+tput setaf 5 ; tput bold ; printf "Novo nome para usuario $user: "; read nome
+usermod -l $nome $user 1>/dev/null 2>/dev/null
+echo -e "\n\033[1;36mNome do usuario: \033[1;31m$user \033[1;36malterado com sucesso para: \033[1;37m$nome\033[0m"
+echo
+tput setaf 1 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para concluir..." ; echo "" ; echo "" ; tput sgr0
+admm

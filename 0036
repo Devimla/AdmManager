@@ -1,0 +1,13 @@
+#!/bin/bash
+
+clear
+for user in $(cat /etc/passwd |awk -F : '$3 > 900 {print $1}' |grep -v "rick" |grep -vi "nobody")
+do
+userpid=$(ps -u $user |awk {'print $1'})
+kill "$userpid" 2>/dev/null
+userdel $user
+echo -e "\033[1;36m$user \033[1;31mdeletado com sucesso!\033[0m"
+done
+echo
+tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
+admm

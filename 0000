@@ -1,0 +1,31 @@
+#!/bin/bash
+
+clear
+echo -e "\033[1;31mAtenção:\033[0m \033[1;36mIsso irá remover apenas o AdmManager, as configurações feitas com ele não serão removidas.\033[0m"
+echo " "
+echo -n -e "\033[1;31mDeseja continuar?(SIM/n):\033[0m"
+
+read resp
+if [ "$resp" == "SIM" ]; then
+   echo -e "\033[1;36mDesinstalando o AdmScript, aguarde.\033[0m"
+   rm /bin/admm
+   rm /bin/0031
+   rm /bin/0032
+   rm /bin/0011
+   rm /bin/0012
+   rm /bin/0033
+   rm /bin/0034
+   rm /bin/0035
+   rm /bin/0036
+   rm /bin/0002
+   rm /bin/0004
+	rm /bin/0005
+	rm /bin/0006
+	rm /bin/0007
+	rm /bin/0000
+   clear
+   echo -e "\033[1;31m               Desinstalação concluída :(\033[0m"
+elif [ "$resp" == "n" ]; then
+    clear
+    echo -e "\033[1;36m              Desinstalação cancelada :)\033[0m"
+fi
