@@ -1,2 +1,31 @@
 #!/bin/bash 
 
+clear
+echo -e "\033[1;31m         0011\033[1;36m|Criar usuário com data de expiração em dias.\033[0m"
+echo 
+echo -e "\033[1;31m         0012\033[1;36m|Criar usuário teste duração em segundos ou horas.\033[0m"
+echo 
+echo -e "\033[1;31m         0031\033[1;36m|Alterar nome de um usuário.\033[0m"
+echo 
+echo -e "\033[1;31m         0032\033[1;36m|Alterar senha de um usuário.\033[0m"
+echo 
+echo -e "\033[1;31m         0033\033[1;36m|Deletar e desconectar todos os usuários.\033[0m"
+echo 
+echo -e "\033[1;31m         0034\033[1;36m|Alterar limite de conexão de um usuário.\033[0m"
+echo 
+echo -e "\033[1;31m         0035\033[1;36m|Alterar data de validade.\033[0m"
+echo 
+echo -e "\033[1;31m         0036\033[1;36m|Deletar todos os usuários.\033[0m"
+echo 
+echo -e "\033[1;31m         0002\033[1;36m|Remover usuários expirados.\033[0m"
+echo 
+echo -e "\033[1;31m         0004\033[1;36m|Criar Backup de usuários.\033[0m"
+echo 
+echo -e "\033[1;31m         0005\033[1;36m|Monitorar em tempo real as conexões.\033[0m"
+echo 
+echo -e "\033[1;31m         0006\033[1;36m|Adicionar Host a lista de permissão.\033[0m"
+echo 
+echo -e "\033[1;31m         0007\033[1;36m|Visualizar, adicionar ou editar o banner SSH.\033[0m"
+echo 
+echo -e "\033[1;31m         0000\033[1;36m|Remover por completo o AdmManager.\033[0m"
+exit 1
