@@ -8,9 +8,16 @@ awk -F : ' { print $1 }' /etc/passwd > /tmp/users
 if grep -Fxq "$username" /tmp/users
 then
 	echo "" 
-	echo -e "\033[1;31mErro! \033[1;35mEste usuário já existe. Crie um usuário com outro nome.\033[0m"
-	sleep 3
-    0001
+	echo -e "\033[1;31mErro! \033[1;37mEste usuário já existe. Crie um usuário com outro nome.\033[0m"
+	echo " "
+			echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+			read resp
+			if [ "$resp" == "s" ]; then
+			0011
+		elif [ "$resp" == "n" ]; then
+    		admm
+		fi
 else
 	if (echo $username | egrep [^a-zA-Z0-9.-_] &> /dev/null)
 	then
