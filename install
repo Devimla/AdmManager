@@ -35,9 +35,33 @@ apt-get purge apache2 -y
 if [ -f "/usr/sbin/ufw" ] ; then
 	ufw allow 443/tcp ; ufw allow 80/tcp ; ufw allow 3128/tcp ; ufw allow 8799/tcp ; ufw allow 8080/tcp
 fi
-git clone https://github.com/Devimla/AdmManager.git
-clear
-   cd AdmManager
+echo -e "\033[1;36mIniciando instalação, aguarde...\033[0m"
+   sleep 3
+   if yum
+   then
+   yum -y update
+   yum -y install git
+   git clone https://github.com/Devimla/AdmManager.git
+   clear
+   cd AdmScript
+   rm -rf README.md
+   rm -rf install
+   for arqs in `ls`
+   do
+   rm /bin/$arqs 2>/dev/null
+   mv $arqs /bin
+   chmod +x /bin/$arqs
+   done
+   echo -e "\033[1;36mConcluído, como usuário root ou usuário com permissões sudo execute o comando \033[1;31madmm \033[1;36mpara selecionar a opção desejada ou use o comando \033[1;31mlistar \033[1;36mpara ter uma lista dos atalhos disponíveis.\033[0m"
+   tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para concluir..." ; echo "" ; echo "" ; tput sgr0
+   admm
+   adm
+   else
+   apt-get update
+   apt-get install -y git
+   git clone https://github.com/Devimla/AdmManager.git
+   clear
+   cd AdmScript
    rm -rf README.md
    rm -rf install
    for arqs in `ls`
