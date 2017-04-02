@@ -26,26 +26,51 @@ tput setaf 6 ; tput bold ; echo "" ; echo "	Aguarde, instalando AdmManager..." ;
 sleep 3
 apt-get update -y
 apt-get upgrade -y
-rm /bin/criarusuario /bin/expcleaner /bin/sshlimiter /bin/addhost /bin/listar /bin/sshmonitor /bin/ajuda /bin/openvpnsetup /bin/userbackup /bin/tcptweaker /bin/badvpnsetup /bin/otimizar /bin/speedtest> /dev/null
-rm /root/ExpCleaner.sh /root/CriarUsuario.sh /root/sshlimiter.sh > /dev/null
-apt-get install squid3 bc screen nano unzip dos2unix wget python-pip inxi -y
+apt-get install bc screen nano unzip dos2unix wget python-pip inxi -y
 pip install speedtest-cli 
 killall apache2
 apt-get purge apache2 -y
 if [ -f "/usr/sbin/ufw" ] ; then
 	ufw allow 443/tcp ; ufw allow 80/tcp ; ufw allow 3128/tcp ; ufw allow 8799/tcp ; ufw allow 8080/tcp
 fi
-git clone https://github.com/Devimla/AdmManager.git
-clear
-   cd AdmManager
-   rm -rf README.md
-   rm -rf install
-   for arqs in `ls`
-   do
-   rm /bin/$arqs 2>/dev/null
-   mv $arqs /bin
-   chmod +x /bin/$arqs
-   done
-   echo -e "\033[1;36mConcluído, como usuário root ou usuário com permissões sudo execute o comando \033[1;31madmm \033[1;36mpara selecionar a opção desejada ou use o comando \033[1;31mlistar \033[1;36mpara ter uma lista dos atalhos disponíveis.\033[0m"
-   tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para concluir..." ; echo "" ; echo "" ; tput sgr0
-   admm
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/listar > /bin/listar
+	chmod +x /bin/listar
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/admm > /bin/admm
+	chmod +x /bin/admm
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0036 > /bin/0036
+	chmod +x /bin/0036
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0035 > /bin/0035
+	chmod +x /bin/0035
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0034 > /bin/0034
+	chmod +x /bin/0034
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0033 > /bin/0033
+	chmod +x /bin/0033
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0032 > /bin/0032
+	chmod +x /bin/0032
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0031 > /bin/0031
+	chmod +x /bin/0031
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0013 > /bin/0013
+	chmod +x /bin/0013
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0012 > /bin/0012
+	chmod +x /bin/0012
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0011 > /bin/0011
+	chmod +x /bin/0011
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0007 > /bin/0007
+	chmod +x /bin/0007
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0006 > /bin/0006
+	chmod +x /bin/0006
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0005 > /bin/0005
+	chmod +x /bin/0005
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0004 > /bin/0004
+	chmod +x /bin/0004
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0002 > /bin/0002
+	chmod +x /bin/0002
+	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/0000 > /bin/0000
+	chmod +x /bin/0000
+    echo -e "\033[1;36mConcluído, como usuário root ou usuário com permissões sudo execute:\033[0m"
+	echo
+	echo -e "\033[1;31madmm: \033[1;36mPara selecionar a opção desejada.\033[0m" 
+	echo -e "\033[1;31mlistar: \033[1;36mPara ter uma lista dos atalhos disponíveis.\033[0m"
+    echo
+	tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para concluir..." ; echo "" ; echo "" ; tput sgr0
+    admm
