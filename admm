@@ -26,7 +26,7 @@ echo -e "\033[1;37m Qual tipo de usuário gostaria de criar?
 \033[1;36m2|Teste
  \033[1;30m|Criar usuário teste duração em segundos ou horas.
 \033[1;36m3|OpenVPN
- \033[1;30m|Criar usuário OpenVPN
+ \033[1;30m|Criar usuário OpenVPN.
 \033[1;36m4|Voltar
  \033[1;30m|Voltar ao menu anterior.\033[0m" 
 read -p "Opção:" opcao
@@ -104,9 +104,18 @@ echo -e "\033[1;31mPara sair precione Ctrl + C\033
 \033[1;36m6|Host
  \033[1;30m|Adicionar Host a lista de permissão.
 \033[1;36m7|Banner
- \033[1;30m|Visualizar, adicionar ou editar o banner SSH.
-\033[1;36m8|Desinstalar
- \033[1;30m|Remover por completo o AdmManager.\033[0m"
+ \033[1;30m|Visualizar, adicionar ou editar o banner SSH.\033[0m"
+if [ -f /bin/adm ]
+  then
+echo -e "\033[1;36m8|AdmScript
+ \033[1;30m|Iniciar o AdmScript.\033[0m" 
+  true
+  else
+echo -e "\033[1;36m8|AdmScript
+\033[1;30m |Instalar o AdmScript.\033[0m" 
+fi
+echo -e "\033[1;36m9|Desinstalar
+ \033[1;30m|Desinstalar o AdmManager.\033[0m"
 read -p "Opção:" opcao
 
 case $opcao in
@@ -125,6 +134,14 @@ case $opcao in
  7)
    0007;;
  8)
+   if [ -f /bin/adm ]
+  then
+     adm
+  true
+  else
+     wget https://raw.githubusercontent.com/Devimla/AdmScript.Beta/master/install && bash install
+	fi;;
+ 9)
    0000;;
   *)
   id > /dev/null 2> /dev/null
