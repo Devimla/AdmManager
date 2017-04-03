@@ -29,7 +29,7 @@ echo -e "\033[1;37m Qual tipo de usuário gostaria de criar?
  \033[1;30m|Criar usuário OpenVPN.
 \033[1;36m4|Voltar
  \033[1;30m|Voltar ao menu anterior.\033[0m" 
-read -p "Opção:" opcao
+tput setaf 6 ; tput bold ; printf "Opção:" ; tput sgr0 ; tput setaf 7 ; tput bold ; read opcao ; tput sgr0
 
 case $opcao in
  1)
@@ -62,7 +62,7 @@ echo -e "\033[1;37mO que deseja redefinir ?
  \033[1;30m|Deletar todos os usuários.
 \033[1;36m7|Voltar
  \033[1;30m|Voltar ao menu anterior.\033[0m" 
-read -p "Opção:" opcao
+tput setaf 6 ; tput bold ; printf "Opção:" ; tput sgr0 ; tput setaf 7 ; tput bold ; read opcao ; tput sgr0
 
 case $opcao in
  1)
@@ -132,7 +132,7 @@ echo -e "\033[1;36m8|AdmScript
 fi
 echo -e "\033[1;36m9|Desinstalar
  \033[1;30m|Desinstalar o AdmManager.\033[0m"
-read -p "Opção:" opcao
+tput setaf 6 ; tput bold ; printf "Opção:" ; tput sgr0 ; tput setaf 7 ; tput bold ; read opcao ; tput sgr0
 
 case $opcao in
  1)
