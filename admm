@@ -84,6 +84,22 @@ case $opcao in
 esac
 }
 
+function hostadd(){
+if [ -d /etc/squid3 ]
+	then 
+		0006
+	true
+    else
+		echo -e "\033[1;31mErro! \033[1;37mPayload não encontrada.\033[0m"
+fi
+if [ -d /etc/squid ]
+	then
+		0006
+	true
+    else
+		jjjj
+fi
+} 
 
 clear
 echo " "
@@ -130,7 +146,7 @@ case $opcao in
  5)
   0005;;
  6)
-  0006;;
+  hostadd;;
  7)
    0007;;
  8)
@@ -139,6 +155,7 @@ case $opcao in
      adm
   true
   else
+	rm install -rf >/dev/null
      wget https://raw.githubusercontent.com/Devimla/AdmScript.Beta/master/install && bash install
 	fi;;
  9)
