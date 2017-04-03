@@ -21,17 +21,26 @@ fi
 if [[ "$optiondb" = '2' ]]; then
 	awk -F : '$3 >= 500 { print $1 " 1" }' /etc/passwd | grep -v '^nobody' > /root/usuarios.db
 fi
-echo ""
-tput setaf 6 ; tput bold ; echo "" ; echo "	Aguarde, instalando AdmManager..." ; echo "" ; tput sgr0
-sleep 3
-apt-get update -y
-apt-get install squid3 bc screen nano unzip dos2unix wget python-pip inxi -y
-pip install speedtest-cli 
-killall apache2
-apt-get purge apache2 -y
-if [ -f "/usr/sbin/ufw" ] ; then
-	ufw allow 443/tcp ; ufw allow 80/tcp ; ufw allow 3128/tcp ; ufw allow 8799/tcp ; ufw allow 8080/tcp
-fi
+clear
+tput setaf 6 ; tput bold ; echo "" ; echo "Iniciando preparativos..." ; echo "" ; tput sgr0
+sleep 5s
+echo
+echo -e "\033[1;31mBaixando atualizações...\033[0m"
+echo
+apt-get update -y > /dev/null
+apt-get install bc screen nano unzip dos2unix wget python-pip inxi -y > /dev/null
+pip install speedtest-cli > /dev/null
+echo -e "\033[1;37mInstalando atualizações...\033[0m"
+sleep 10
+echo
+echo -e "\033[1;32mBaixando arquivos necessários...\033[0m"
+sleep 8
+echo
+echo -e "\033[1;33mMovendo arquivos necessários...\033[0m"
+sleep 9
+echo
+echo -e "\033[1;34mQuase no fim...\033[0m"
+sleep 10
 	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/listar > /bin/listar
 	chmod +x /bin/listar
 	wget -o /dev/null -O- https://raw.githubusercontent.com/Devimla/AdmManager/master/admm > /bin/admm
