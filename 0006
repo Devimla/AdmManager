@@ -1,11 +1,15 @@
 #!/bin/bash
 
 clear
-payload="/etc/squid3/payload.txt"
+payload="/etc/payloads"
 tput setaf 6 ; tput bold ; printf '%35s%s%-10s\n' "Adicionar Host ao Squid" ; tput sgr0
 if [ ! -f "$payload" ]
 then
-	tput setaf 7 ; tput setab 4 ; tput bold ; echo "" ; echo "Arquivo $payload não encontrado" ; tput sgr0
+	echo -e "\033[1;31mErro! \033[1;37mArquivo onde ficam os Host aceitos não foi encontrado.\033[0m"
+	echo
+	echo -e "\033[1;31mPara utilizar esse script instale o Squid utilizando o AdmScript.\033[0m"
+	echo
+	tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
 	admm
 else
 	tput setaf 5 ; tput bold ; echo ""; echo "Lista de Host aceitos atualmente:" ; tput sgr0
@@ -15,8 +19,15 @@ else
 	if [[ -z $host ]]
 	then
 		echo -e "\033[1;31mErro! \033[1;37mVocê não digitou um Host, tente novamente.\033[0m"
-        sleep 3
-        0006
+        echo " "
+        echo -n -e "\033[1;31mDeseja tentar novamente?(s/n):\033[0m"
+
+				read resp
+				if [ "$resp" == "s" ]; then
+					0006
+				elif [ "$resp" == "n" ]; then
+    				admm
+				fi
 	else
 		if [[ `grep -c "^$host" $payload` -eq 1 ]]
 		then

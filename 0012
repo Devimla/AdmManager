@@ -1,38 +1,241 @@
-#!/bin/bash 
+#!/bin/bash
 
 clear
-mkdir /etc/usuariosteste 1>/dev/null 2>/dev/null
-echo -e "\033[1;36mCriar usuário teste\033[0m"
-echo -e "\033[1;30mInsira os dados para o novo usuario de teste.\033[0m"
-for testus in $(ls /etc/usuariosteste |sort |sed 's/.sh//g')
-do
-echo "$testus"
-done
-printf "\n"
-tput setaf 5 ; tput bold ; printf "Nome:"; tput sgr0 ; read nome
-tput setaf 5 ; tput bold ; printf "Senha: "; tput sgr0 ; read pass
-echo -e "\n\033[1;30mUse s = segundos, m = minutos e h = horas\033[0m" 
-echo -e "\033[1;35mexemplo: \033[1;31m14s.\033[0m"
-echo " "
-tput setaf 5 ; tput bold ; printf "Quanto tempo usuario $nome deve durar: "; tput sgr0 ; read tempoin
-tempo=$(echo "$tempoin" |sed 's/ //g')
-useradd -M -s /bin/false $nome
-(echo $pass;echo $pass) |passwd $nome 1>/dev/null 2>/dev/null
-echo "#!/bin/bash
-sleep $tempo
-kill"' $(ps -u '"$nome |awk '{print"' $1'"}') 1>/dev/null 2>/dev/null
-userdel --force $nome
-rm -rf /etc/usuariosteste/$nome.sh
-exit" > /etc/usuariosteste/$nome.sh
-clear
-echo -e "\033[1;36mDados do novo usuário\033[0m"
-echo " "
-echo -e "\033[1;35mNome: \033[1;31m$nome
-\033[1;35mSenha: \033[1;31m$pass
-\033[1;35mValidade: \033[1;31m$tempo\n\033[0m"
-echo " "
-echo -e "\033[1;37mApos o tempo expirar o usuario sera deletado e todos serão desconectados.\033[0m"
-bash /etc/usuariosteste/$nome.sh &
-echo 
-tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
-admm
+mkdir /etc/userteste 1>/dev/null 2>/dev/null
+tput setaf 6 ; tput bold ; printf '%30s%s%-15s\n' "Insira os dados do novo usuario" ; tput sgr0
+echo ""
+tput setaf 5 ; tput bold ; read -p "Digite o nome: " username ; tput sgr0
+awk -F : ' { print $1 }' /etc/passwd > /tmp/users 
+if grep -Fxq "$username" /tmp/users
+then
+	echo "" 
+	echo -e "\033[1;31mErro! \033[1;37mEste usuário já existe. Crie um usuário com outro nome.\033[0m"
+	echo " "
+			echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+			read resp
+			if [ "$resp" == "s" ]; then
+			0012
+		elif [ "$resp" == "n" ]; then
+    		admm
+		fi
+else
+	if (echo $username | egrep [^a-zA-Z0-9.-_] &> /dev/null)
+	then
+		echo -e "\033[1;31mErro! Você digitou um nome de usuário inválido!\033[0m"  
+        echo -e "\033[1;31mUse apenas letras, números, pontos e traços.\033[0m" 
+        echo -e "\033[1;31mNão use espaços, acentos ou caracteres especiais!\033[0m"
+		echo " "
+		echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+		read resp
+		if [ "$resp" == "s" ]; then
+			0012
+		elif [ "$resp" == "n" ]; then
+    		admm
+		fi
+	else
+		sizemin=$(echo ${#username})
+		if [[ $sizemin -lt 2 ]]
+		then
+			echo "" 
+			echo -e "\033[1;31mErro! \033[1;37mVocê digitou um nome de usuário muito curto, use no mínimo dois caracteres!"
+			echo " "
+			echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+			read resp
+			if [ "$resp" == "s" ]; then
+			0012
+		elif [ "$resp" == "n" ]; then
+    		admm
+		fi
+		else
+			sizemax=$(echo ${#username})
+			if [[ $sizemax -gt 150 ]]
+			then
+			echo "" 
+			echo -e "\033[1;31mErro! Você digitou um nome de usuário muito grande.\033[0m"
+                echo -e "\033[1;31mUse no máximo 150 caracteres!\033[0m"
+                echo " "
+				echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+				read resp
+					if [ "$resp" == "s" ]; then
+					0012
+				elif [ "$resp" == "n" ]; then
+    				admm
+			fi
+			else
+				if [[ -z $username ]]
+				then
+					echo -e "\033[1;31mErro! \033[1;37mVocê não digitou um nome para o usuário!\033[0m"
+					echo " "
+				    echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+						read resp
+						if [ "$resp" == "s" ]; then
+							0012
+						elif [ "$resp" == "n" ]; then
+    						admm
+						fi
+				else	
+					tput setaf 5 ; tput bold ; read -p "Senha: " password ; tput sgr0
+					if [[ -z $password ]]
+					then
+					echo "" 
+					echo -e "\033[1;31mErro! \033[1;37mVocê não digitou a senha!\033[0m"
+					echo " "
+				    echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+						read resp
+						if [ "$resp" == "s" ]; then
+							0012
+						elif [ "$resp" == "n" ]; then
+    						admm
+						fi
+					else
+						sizepass=$(echo ${#password})
+						if [[ $sizepass -lt 2 ]]
+						then
+							echo  "" 
+							echo -e "\033[1;31mErro! \033[1;37mVocê digitou uma senha muito curta! use no mínimo 2 caracteres.\033[0m"
+							echo " "
+							echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+							read resp
+								if [ "$resp" == "s" ]; then
+									0012
+								elif [ "$resp" == "n" ]; then
+    								admm
+						fi
+						else	
+							echo -e "\n\033[1;30mUse s = segundos, m = minutos e h = horas\033[0m" 
+							echo -e "\033[1;35mexemplo: \033[1;31m14s.\033[0m"
+							tput setaf 5 ; tput bold ; printf "Quanto tempo usuario $username deve durar: "; tput sgr0 ; read tempoin
+							if (echo $tempoin | egrep '[^0-9h-m-s]' &> /dev/null)
+							then
+							echo "" 
+							echo -e "\033[1;31mErro! \033[1;37mUtilize apenas números!\033[0m"
+							echo " "
+							echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+							read resp
+								if [ "$resp" == "s" ]; then
+									0012
+								elif [ "$resp" == "n" ]; then
+    								admm
+						    fi
+							else
+								if [[ -z $tempoin  ]]
+								then
+   								 echo "" 
+									echo -e "\033[1;31mErro! \033[1;37mVocê não digitou a validade do usuário!\033[0m"
+									echo " "
+									echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+								read resp
+								if [ "$resp" == "s" ]; then
+									0012
+								elif [ "$resp" == "n" ]; then
+    								admm
+								fi
+								else	
+									if (echo $tempoin | egrep '[^a-z1-9]' &> /dev/null)
+									then
+										echo "" 
+										echo -e "\033[1;31mErro! \033[1;37mVocê deve digitar um número maior que 0 seguido de \033[1;31ms \033[1;36m, \033[1;31mm \033[1;36mou \033[1;31mh!\033[0m" 
+										echo " "
+										echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+										read resp
+											if [ "$resp" == "s" ]; then
+												0012
+										elif [ "$resp" == "n" ]; then
+    											admm
+									fi
+									else
+										tput setaf 5 ; tput bold ; read -p "Nº de conexões simultâneas permitidas: " sshlimiter ; tput sgr0
+										if (echo $sshlimiter | egrep '[^0-9]' &> /dev/null)
+										then
+										echo 
+											echo -e "\033[1;31mErro! \033[1;37mUtilize apenas números para definir o limite\033[0m"
+											echo " "
+											echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+											read resp
+											if [ "$resp" == "s" ]; then
+												0012
+											elif [ "$resp" == "n" ]; then
+    											admm
+										fi
+										else
+											if [[ -z $sshlimiter ]]
+											then
+												echo 
+												echo -e "\033[1;31mErro! \033[1;37mVocê não digitou o limite de conexão!\033[0m"
+												echo " "
+												echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+												read resp
+												if [ "$resp" == "s" ]; then
+													0012
+												elif [ "$resp" == "n" ]; then
+    												admm
+											fi
+											else
+												if [[ $sshlimiter -lt 1 ]]
+												then
+													echo 
+													echo -e "\033[1;31mErro! \033[1;37mVocê deve digitar um número maior que zero!\033[0m"
+													echo " "
+				    								echo -n -e "\033[1;31mDeseja tentar novamente(s/n):\033[0m"
+
+													read resp
+													if [ "$resp" == "s" ]; then
+														0012
+													elif [ "$resp" == "n" ]; then
+    													admm
+												fi
+												else
+													tempo=$(echo "$tempoin" |sed 's/ //g')
+													useradd -M -s /bin/false $username
+													(echo $password;echo $password) |passwd $username 1>/dev/null 2>/dev/null
+													limite $username $sshlimiter
+													echo "#!/bin/bash
+													sleep $tempo
+													kill"' $(ps -u '"$username |awk '{print"' $1'"}') 1>/dev/null 2>/dev/null
+													userdel --force $username
+													rm -rf /etc/userteste/$username.sh
+													exit" > /etc/userteste/$username.sh
+													clear
+													echo -e "\033[1;36mDados do novo usuário\033[0m"
+													echo " "
+													echo -e "\033[1;35mNome: \033[1;31m$username\033[0m" 
+													echo -e "\033[1;35mSenha: \033[1;31m$password\033[0m"
+													echo -e "\033[1;35mValidade: \033[1;31m$tempoin\033[0m"
+													echo -e "\033[1;35mLimite de conexão permitida: \033[1;31m$sshlimiter\033[0m"
+													echo " "
+													echo -e "\033[1;37mApos o tempo expirar o usuario sera deletado e todos serão desconectados.\033[0m"
+													bash /etc/userteste/$username.sh &
+													echo 
+													echo -n -e "\033[1;31mDeseja criar mais um?(s/n):\033[0m"
+
+													read resp
+													if [ "$resp" == "s" ]; then
+														0012
+													elif [ "$resp" == "n" ]; then
+    													admm
+												fi
+												fi
+											fi
+										fi
+									fi
+								fi
+							fi
+						fi
+					fi
+				fi
+			fi
+		fi
+	fi	
+fi

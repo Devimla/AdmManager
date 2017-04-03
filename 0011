@@ -202,8 +202,9 @@ else
 													[ $? -eq 0 ] && echo -e "\033[1;36mUsuário criado com sucesso!\033[0m"
 													echo " "
 													echo -e "\033[1;35mNome: \033[1;37m$username\033[0m"
+													echo -e "\033[1;35mSenha: \033[1;37m$password\033[0m"
 													echo -e "\033[1;35mData de expiração: \033[1;37m$gui\033[0m"
-													echo -e "\033[1;35mNº de conexões simultâneas permitidas: \033[1;37m$sshlimiter" ; echo "" || echo "Não foi possível criar o usuário!" ; tput sgr0
+													echo -e "\033[1;35mLimite de conexão permitida: \033[1;37m$sshlimiter" ; echo "" || echo "Não foi possível criar o usuário!" ; tput sgr0
 													echo "$username $sshlimiter" >> /root/usuarios.db
 													echo 
 													echo -n -e "\033[1;31mDeseja criar mais um?(s/n):\033[0m"
