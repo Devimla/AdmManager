@@ -2,7 +2,7 @@
 
 clear
 mkdir /etc/userteste 1>/dev/null 2>/dev/null
-tput setaf 6 ; tput bold ; printf '%30s%s%-15s\n' "Insira os dados do novo usuario" ; tput sgr0
+tput setaf 6 ; tput bold ; printf '%30s%s%-15s\n' "Insira os dados do novo usuário teste" ; tput sgr0
 echo ""
 tput setaf 5 ; tput bold ; printf "Digite o nome: "; tput sgr0 ; read username
 awk -F : ' { print $1 }' /etc/passwd > /tmp/users 
