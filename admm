@@ -156,7 +156,7 @@ case $opcao in
   true
   else
 	rm install -rf >/dev/null
-     wget https://raw.githubusercontent.com/Devimla/AdmScript.Beta/master/install && bash install
+     wget https://raw.githubusercontent.com/Devimla/AdmScript/master/install && bash install
 	fi;;
  9)
    0000;;
