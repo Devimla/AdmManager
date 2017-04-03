@@ -2,9 +2,9 @@
 
 clear
 echo -e "\033[1;36mLista de usuários:\033[0m"
-tput setaf 1 ; tput bold ; awk -F : '$3 >= 500 { print $1 }' /etc/passwd | grep -v '^nobody' ; tput sgr0
+tput setaf 7 ; tput bold ; awk -F : '$3 >= 500 { print $1 }' /etc/passwd | grep -v '^nobody' ; tput sgr0
 echo ""
-tput setaf 5 ; tput bold; read -p "Nome do usuário para remover: " user ; tput sgr0
+tput setaf 5 ; tput bold; printf "Nome do usuário para remover: "; tput setaf 7 ; tput bold ; read user ; tput sgr0
 if [[ -z $user ]]
 then
 		echo

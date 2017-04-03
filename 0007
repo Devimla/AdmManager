@@ -13,14 +13,15 @@ else
 banner="Não há um banner no momento"
 fi
 echo -e "\033[1;36mBanner atual\n\n\033[1;37m$banner\n\033[0m"
-echo -e "\033[1;31mQual banner deseja adicionar (ctrl + c para sair )\033[0m"
-read -p ": " bannerssh
+tput setaf 5 ; tput bold ; printf "Digite o novo banner desejado: " ; tput sgr0 
+echo ""
+tput setaf 7 ; tput bold ; read bannerssh ; tput sgr0
 echo "$bannerssh" > /etc/bannerssh
 service ssh restart 1> /dev/null 2>/dev/null
 service sshd restart 1>/dev/null 2>/dev/null
-echo
+clear
 echo -e "\033[1;36mBanner atualizado com sucesso.\033[0m"
-echo -e "\033[1;37mBanner atual:\n\n\033[1;37m$(cat /etc/bannerssh)\n\033[0m"
+echo -e "\033[1;31mBanner atual:\n\n\033[1;37m$(cat /etc/bannerssh)\n\033[0m"
 echo
 tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
 admm

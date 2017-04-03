@@ -1,11 +1,8 @@
 #!/bin/bash 
 
 clear
-
 while true; do
-tput setaf 6 ; tput bold ; echo "                      SSH Monitor" ; tput sgr0
-echo -e " \033[1;37m   Usuario                |               Conexões     \033[0m"
-echo -e "\033[1;30m ----------------------------------------------------\033[0m"
+echo -e " \033[1;37m   Usuario           \033[1;36m¦SSH Monitor¦        \033[1;37mConexões     \033[0m"
 for usur in `awk -F : '$3 > 900 { print $1 }' /etc/passwd |grep -v "nobody" |grep -vi polkitd |grep -vi systemd-[a-z] |grep -vi systemd-[0-9] |sort`; do
 if [ -f /etc/gerenciadorinfo/limite/$usur ]; then
 limite=$(cat -n /etc/gerenciadorinfo/limite/$usur |awk '$1 = 1 {print $2}')
@@ -18,6 +15,7 @@ echo -e "\033[1;30m ----------------------------------------------------\033[0m"
 	done
 	echo
    echo -e "\033[1;31mPressione CTRL + X para sair.\033[0m"
-   tput setaf 6 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para atualizar" ; echo "" ; echo "" ; tput sgr0
+   tput setaf 6 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para atualizar" ; echo "" ; echo "" ; tput sgr0 ;
    clear
 done
+exit 0

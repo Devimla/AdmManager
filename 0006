@@ -2,7 +2,6 @@
 
 clear
 payload="/etc/payloads"
-tput setaf 6 ; tput bold ; printf '%35s%s%-10s\n' "Adicionar Host ao Squid" ; tput sgr0
 if [ ! -f "$payload" ]
 then
 	echo -e "\033[1;31mErro! \033[1;37mArquivo onde ficam os Host aceitos não foi encontrado.\033[0m"
@@ -12,12 +11,12 @@ then
 	tput setaf 5 ; tput bold ; read -n 1 -s -p "Pressione qualquer tecla para finalizar..." ; echo "" ; echo "" ; tput sgr0
 	admm
 else
-	tput setaf 5 ; tput bold ; echo ""; echo "Lista de Host aceitos atualmente:" ; tput sgr0
+	tput setaf 6 ; tput bold ; echo ""; echo "Lista de Host aceitos atualmente:" ; tput sgr0
 	tput setaf 7 ; tput bold ; echo "" ; cat $payload ; echo "" ; tput sgr0
-	echo -e "\033[1;36mDigite o host que deseja adicionar:"
-    read host
+	tput setaf 5 ; tput bold ; printf "Digite o host que deseja adicionar: " ; tput sgr0 ; tput setaf 7 ; tput bold ; read host ; tput sgr0
 	if [[ -z $host ]]
 	then
+		echo
 		echo -e "\033[1;31mErro! \033[1;37mVocê não digitou um Host, tente novamente.\033[0m"
         echo " "
         echo -n -e "\033[1;31mDeseja tentar novamente?(s/n):\033[0m"
@@ -45,6 +44,7 @@ else
 		else
 			if [[ $host != \.* ]]
 			then
+				echo
                 echo -e "\033[1;31m::::::Erro!\033[0m" 
 				echo -e "\033[1;37mVocê deve adicionar um domínio iniciando-o com um ponto!\033[0m"
 				echo -e "\033[1;37mPor exemplo: \033[1;31m.google.com.br\033[0m"

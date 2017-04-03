@@ -3,7 +3,7 @@
 clear
 tput setaf 6 ; tput bold ; printf '%30s%s%-15s\n' "Insira os dados do novo usuario" ; tput sgr0
 echo ""
-tput setaf 5 ; tput bold ; read -p "Digite o nome: " username ; tput sgr0
+tput setaf 5 ; tput bold ; printf "Digite o nome: " ; tput sgr0 ; tput setaf 7 ; tput bold ; read username ; tput sgr0
 awk -F : ' { print $1 }' /etc/passwd > /tmp/users 
 if grep -Fxq "$username" /tmp/users
 then
@@ -78,7 +78,7 @@ else
     						admm
 						fi
 				else	
-					tput setaf 5 ; tput bold ; read -p "Senha: " password ; tput sgr0
+					tput setaf 5 ; tput bold ; printf "Senha para $username: " ; tput sgr0; tput setaf 7 ; tput bold ; read password ; tput sgr0
 					if [[ -z $password ]]
 					then
 					echo "" 
@@ -108,7 +108,7 @@ else
     								admm
 						fi
 						else	
-							tput setaf 5 ; tput bold ; read -p "Dias para expirar: " dias ; tput sgr0
+							tput setaf 5 ; tput bold ; printf "Dias para expirar: "; tput sgr0 ; tput setaf 7; tput bold ; read dias ; tput sgr0
 							if (echo $dias | egrep '[^0-9]' &> /dev/null)
 							then
 							echo "" 
@@ -151,7 +151,7 @@ else
     											admm
 									fi
 									else
-										tput setaf 5 ; tput bold ; read -p "Nº de conexões simultâneas permitidas: " sshlimiter ; tput sgr0
+										tput setaf 5 ; tput bold ; printf "Nº de conexões simultâneas permitidas: "; tput sgr0 ; tput setaf 7 ; tput bold ; read sshlimiter ; tput sgr0
 										if (echo $sshlimiter | egrep '[^0-9]' &> /dev/null)
 										then
 										echo 

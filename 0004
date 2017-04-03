@@ -11,7 +11,7 @@ echo -e "\033[1;31m* \033[1;36m2 - Restaurar Backup"
 echo -e "\033[1;31m* \033[1;36m3 - Voltar\033[0m"
 echo ""
 
-tput setaf 5 ; tput bold ; read -p "Opção: " -e -i 1 opcao ; tput sgr0
+tput setaf 5 ; tput bold ; printf "Opção: " ; tput sgr0 ; tput setaf 7 ; tput bold ; read opcao ; tput sgr0
 
 if [[ "$opcao" = '1' ]]; then
 	if [ -f "/root/usuarios.db" ]

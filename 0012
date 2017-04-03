@@ -4,7 +4,7 @@ clear
 mkdir /etc/userteste 1>/dev/null 2>/dev/null
 tput setaf 6 ; tput bold ; printf '%30s%s%-15s\n' "Insira os dados do novo usuario" ; tput sgr0
 echo ""
-tput setaf 5 ; tput bold ; read -p "Digite o nome: " username ; tput sgr0
+tput setaf 5 ; tput bold ; printf "Digite o nome: "; tput sgr0 ; read username
 awk -F : ' { print $1 }' /etc/passwd > /tmp/users 
 if grep -Fxq "$username" /tmp/users
 then
@@ -79,7 +79,7 @@ else
     						admm
 						fi
 				else	
-					tput setaf 5 ; tput bold ; read -p "Senha: " password ; tput sgr0
+					tput setaf 5 ; tput bold ; printf "Senha: "; tput sgr0 ; read password
 					if [[ -z $password ]]
 					then
 					echo "" 
@@ -110,7 +110,8 @@ else
 						fi
 						else	
 							echo -e "\n\033[1;30mUse s = segundos, m = minutos e h = horas\033[0m" 
-							echo -e "\033[1;35mexemplo: \033[1;31m14s.\033[0m"
+							echo -e "\033[1;31mExemplo: \033[1;36m14s.\033[0m"
+							echo
 							tput setaf 5 ; tput bold ; printf "Quanto tempo usuario $username deve durar: "; tput sgr0 ; read tempoin
 							if (echo $tempoin | egrep '[^0-9h-m-s]' &> /dev/null)
 							then
@@ -140,7 +141,7 @@ else
     								admm
 								fi
 								else	
-									if (echo $tempoin | egrep '[^a-z1-9]' &> /dev/null)
+									if (echo $tempoin | egrep '[^a-z0-9]' &> /dev/null)
 									then
 										echo "" 
 										echo -e "\033[1;31mErro! \033[1;37mVocê deve digitar um número maior que 0 seguido de \033[1;31ms \033[1;36m, \033[1;31mm \033[1;36mou \033[1;31mh!\033[0m" 
@@ -154,7 +155,7 @@ else
     											admm
 									fi
 									else
-										tput setaf 5 ; tput bold ; read -p "Nº de conexões simultâneas permitidas: " sshlimiter ; tput sgr0
+										tput setaf 5 ; tput bold ; printf "Nº de conexões simultâneas permitidas: "; tput sgr0 ; read sshlimiter
 										if (echo $sshlimiter | egrep '[^0-9]' &> /dev/null)
 										then
 										echo 
